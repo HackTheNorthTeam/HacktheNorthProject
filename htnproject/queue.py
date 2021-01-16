@@ -5,19 +5,19 @@ class queue:
 
     line = None
 
-    def __init__(this, identifier, teachers, students):
-        this.identifier = identifier
-        this.teachers = teachers
-        this.students = students
+    def __init__(self, identifier, teachers, students):
+        self.identifier = identifier
+        self.teachers = teachers
+        self.students = students
 
     line = {}
 
-    def pairTeachersStudents(this):
-        for n in range(len(this.teachers)):
-            this.line[this.teachers[n]] = this.students[n]
+    def pairTeachersStudents(self):
+        for n in range(len(self.teachers)):
+            self.line[self.teachers[n]] = self.students[n]
 
-        for n in range(len(this.teachers)):
-            this.students.remove(this.students[0])
+        for n in range(len(self.teachers)):
+            self.students.remove(self.students[0])
 
-    def removePair(this, index):
-        this.line[index] = this.students[0]
+    def removePair(self, index):
+        self.line[index] = self.students[0]
