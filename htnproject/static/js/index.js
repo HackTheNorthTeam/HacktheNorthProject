@@ -17,8 +17,8 @@ let constraints = {
 }
 
 const roomName = JSON.parse(document.getElementById('room-name').textContent);
-var socket = new WebSocket(
-    "wss://" +
+var socket = new ReconnectingWebSocket(
+    (location.protocol == "https:" ? "wss" : "ws") + "://" +
     location.host +
     "/ws/video/" +
     roomName
