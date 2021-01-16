@@ -22,7 +22,6 @@ var socket = new ReconnectingWebSocket(
     location.host +
     "/ws/video/" +
     roomName
-    + "/"
 );
 var connection = new RTCPeerConnection(configuration);
 
