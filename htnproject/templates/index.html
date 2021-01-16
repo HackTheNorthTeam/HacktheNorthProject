@@ -5,9 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTNProject</title>
-    <script src="{% static 'js/index.js' %}"></script>
 </head>
 <body>
-    <video id="stream" autoplay></video>
+    {% block content %}
+    {% endblock %}
+    <label>Enter the Room Name!<br></label>
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Enter">
+    <video id="local" autoplay playsinline></video>
+    <video id="remote" autoplay playsinline></video>
+    {{ room_name|json_script:"room-name" }}
+    <script src="{% static 'js/index.js' %}"></script>
 </body>
 </html>

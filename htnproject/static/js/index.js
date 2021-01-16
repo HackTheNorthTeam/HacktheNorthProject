@@ -1,23 +1,120 @@
-const constraints  = {
-    video: true,
-    audio: true
+let configuration = {
+    iceServers: [{
+        urls: 'stun:stun.l.google.com:19302'
+    }]
+};
+
+let constraints = {
+    'video': true,
+    'audio': true
 }
 
-async function getVideo() {
-    var video = document.querySelector('video');
-    const stream = await navigator
+const roomName = JSON.parse(document.getElementById('room-name').textContent);
+var socket = new WebSocket(
+    "ws://" +
+    location.host +
+    "/ws/video/" +
+    roomName
+    + "/"
+);
+var connection = new RTCPeerConnection(configuration);
+
+socket.onopen = event => {
+    console.log('Opened socket!');
+};
+
+function createIceCandidate(event) {
+    if (event.candidate) {
+        socket.send(JSON.stringify({
+            "type": "send_ice_candidate",
+            "data": event.candidate
+        }));
+    }
+}
+
+function addStream(event) {
+    remote.srcObject = event.stream;
+}
+
+connection.onicecandidate = createIceCandidate;
+connection.onaddstream = addStream;
+
+var local = document.getElementById("local");
+var remote = document.getElementById("remote");
+var stream;
+navigator
     .mediaDevices
     .getUserMedia(constraints)
     .then(stream => {
-        video.srcObject = stream;
-        console.log("Successfully fetched stream");
+        this.stream = stream;
     })
-    .catch(error => {
-        console.log("Failed to fetch stream", error);
+    .catch(error => console.error("Failed to get user media stream.", error));
+
+
+document.querySelector('#room-name-submit').onclick = function (event) {
+    handleNegotiationNeededEvent();
+    console.log("Sending offer");
+};
+
+socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    console.log(data);
+    if (data['type'] == 'offer') {
+        console.log();
+        handleVideoOfferMessage(data)
+        console.log('Got to send answer part.');
+    } else if (data['type'] == 'answer') {
+        console.log('Got to send offer part.');
+    } else if (data['type'] == 'ice') {
+        connection.addIceCandidate(new RTCIceCandidate(data));
+    }
+};
+
+function handleNegotiationNeededEvent() {
+    connection.createOffer()
+    .then(offer => {
+        return connection.setLocalDescription(offer);
     })
-    video.srcObject = stream;
+    .then(() => {
+        socket.send(JSON.stringify({
+            "type": "send_offer",
+            "data": connection.localDescription
+        }));
+      })
+      .catch(error => console.error("Error with offer sending", error));
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    getVideo();
-});
+function handleVideoOfferMessage(offer) {
+    connection.onicecandidate = function (event) {
+        socket.send(JSON.stringify({
+            "type": "send_ice_candidate",
+            "data": event.candidate
+        }));
+    }
+    connection.onaddstream = function (event) {
+        remote.srcObject = event.stream;
+    }
+    connection.setRemoteDescription(new RTCSessionDescription(offer));
+    connection.createAnswer()
+    .then(answer => {
+        return connection.setLocalDescription(answer);
+    })
+    .then(() => {
+        socket.send(JSON.stringify({
+            "type": "send_answer",
+            "data": connection.localDescription
+        }));
+    })
+
+    .then(() => {
+        const stream = new MediaStream();
+        connection.addEventListener('track', async (event) => {
+            stream.addTrack(event.track, stream);
+        });
+        remote.srcObject = stream;
+    })
+}
+
+socket.onclose = event => {
+    console.error('Chat socket closed unexpectedly');
+};
