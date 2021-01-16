@@ -1,3 +1,4 @@
+from HacktheNorthProject.htnproject.models import Course
 from django.http import HttpResponse
 from django.http.response import HttpResponseServerError
 from django.template import loader
@@ -20,3 +21,13 @@ def authenticateUser(request):
 def logoutUser(request):
     logout(request)
     return redirect("/")
+
+def joinQueue(request):
+    if request.user.is_authenticated:
+        course = request.user.course
+    else:
+        course = request.POST["course"]
+        try:
+            Course.objects.get(code=course)
+        except:
+            return redirect("/")
