@@ -1,8 +1,6 @@
 var local = document.getElementById('local');
 var remote = document.getElementById('remote');
 var connection = new RTCMultiConnection();
-
-const roomName = JSON.parse(document.getElementById('room-name').textContent);
 connection.socketUrl = connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 connection.iceServers = [];
@@ -19,12 +17,13 @@ connection.session = {
     audio: true,
     video: true
 };
+
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
 };
 
-connection.onstream = function(event) {
+connection.onstream = event => {
     switch (event.type) {
         case 'local':
             local.appendChild(event.mediaElement);
@@ -35,7 +34,4 @@ connection.onstream = function(event) {
     }
 };
 
-document.querySelector('#room-name-submit').onclick = function (event) {
-    console.log("Joining room!")
-    connection.openOrJoin(roomName);
-};
+document.querySelector('#session-submit').onclick = () => connection.openOrJoin(document.querySelector('#room-name').textContent);

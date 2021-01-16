@@ -7,13 +7,11 @@
     <title>HTNProject</title>
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
-    <label>Enter the Room Name!<br></label>
-    <input id="room-name-submit" type="button" value="Enter">
+    <label>Enter A Room!</label>
+    <input id="session-name" type="text" />
+    <input id="session-submit" type="button" value="Enter" />
     <div id="local"></div>
     <div id="remote"></div>
-    {{ room_name|json_script:"room-name" }}
     <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
     <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
     <script src="{% static 'js/index.js' %}"></script>
