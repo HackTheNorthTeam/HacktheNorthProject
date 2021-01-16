@@ -22,4 +22,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('login', views.authenticateUser, name='login'),
     path('logout', views.logoutUser, name='logout'),
+    path('findtutor', views.findTutor, name='findtutor'),
+    path('queue', views.queue, name='queue'),
+    path('room/<str:room_name>', views.room, name='room')
 ]

@@ -2,28 +2,19 @@
 {% block content %}
 <div class="container pt-3" style="max-width: 600pt">
     {% if request.user.is_authenticated %}
-    <h1 class="text-center">Beginning Tutoring Session</h1>
-    <form action="queue">
-        <button type="submit" class="btn-block btn btn-dark">Join Queue</button>
-    </form>
     {% else %}
     <h1 class="text-center">Let's Get Started</h1>
-    <form action="findtutor" method="POST">
-        {% csrf_token %}
+    <form action="findtutor">
     <div class="input-group text-center">
         <textarea class="form-control"  placeholder="Enter your question"></textarea>
     </div>
     <div class="input-group text-center">
         <input class="input-group-text text-center" name="course" style="width: 100%; font-size: 18pt" placeholder="Ontario Course Code">
     </div>
-    <div class="input-group text-center">
-        <input class="input-group-text text-center" type="password" name="schoolid" style="width: 100%; font-size: 18pt" placeholder="School ID">
-    </div>
     <div>
         <button type="submit" class="btn-block btn btn-dark">Find a Tutor</button>
     </div>
     </form>
-    {{schoolID_error_message}}
     {% endif %}
 </div>
 

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'htnproject'
 ]
 
@@ -67,6 +68,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = 'htnproject.asgi.application'
 
 WSGI_APPLICATION = 'htnproject.wsgi.application'
 

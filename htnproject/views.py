@@ -1,9 +1,10 @@
-from HacktheNorthProject.htnproject.models import Course
+from htnproject.models import Course, School
 from django.http import HttpResponse
 from django.http.response import HttpResponseServerError
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+import random, string
 
 def index(request):
     return render(request, 'index.html')
@@ -22,12 +23,26 @@ def logoutUser(request):
     logout(request)
     return redirect("/")
 
-def joinQueue(request):
-    if request.user.is_authenticated:
-        course = request.user.course
-    else:
+def findTutor(request):
+    try:
         course = request.POST["course"]
-        try:
-            Course.objects.get(code=course)
-        except:
-            return redirect("/")
+        schoolID = request.POST["schoolid"]
+
+        Course.objects.get(code=course)
+        School.objects.get(school_id = schoolID)
+
+        room_id = ''.join(random.choice(string.ascii_lowercase + string.digits) for i in range(8))
+
+        return redirect("/room/" + room_id)
+
+    except:
+        return redirect("/", {'schoolID_error_message' : "Error: You did not enter a valid school ID."})
+
+def room(request):
+    return render('room.html')
+
+def queue(request):
+    if not request.user.is_authenticated:
+        return redirect("/")
+    else:
+        return render(request, "queue.html")    
