@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.http.response import HttpResponseServerError
 from django.template import loader
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 
 def index(request):
     return render(request, 'index.html')
@@ -15,5 +15,10 @@ def authenticateUser(request):
     if user is not None:
         login(request, user)
 
-    return HttpResponse    
+    redirect("/")
+    return redirect("/")   
 
+def logoutUser(request):
+    logout(request)
+    redirect("/")
+    return redirect("/")

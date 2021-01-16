@@ -6,7 +6,7 @@
             <div class="collapse bg-dark pt-3 text-right" id="loginCollapsedContent">
                 {% if request.user.is_authenticated %}
                 <form action="logout" class="bg-dark" style="padding-right: 2pt">
-                    <button class="btn btn-outline-light" type="button" action="logout">Logout</button>
+                    <button class="btn btn-outline-light" type="submit" action="logout">Logout</button>
                 {% else %}
                 <form action="login" method="post">
                     {% csrf_token %}
