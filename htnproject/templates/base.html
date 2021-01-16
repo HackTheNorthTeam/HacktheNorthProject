@@ -2,16 +2,32 @@
 
 <html>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class ="navbar-brand">Tutoring Service</div>
-            <button class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
+        <div class="bg-dark" >
+            <div class="collapse bg-dark pt-3 text-right" id="loginCollapsedContent">
+                {% if request.user.is_authenticated %}
+                <form action="logout" class="bg-dark" style="padding-right: 2pt">
+                    <button class="btn btn-outline-light" type="button" action="logout">Logout</button>
+                {% else %}
+                <form action="login" method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Username" name="username">
+                    <input type="password" placeholder="Password" name="passwd">
+                    <button class="btn btn-outline-light" type="submit" action="login">Login</button>
+                {% endif %}
+                </form>
+            </div>
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="btn btn-outline-success" type="button">Home</button>
+            <div class ="navbar-brand">Web Tutor</div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#loginCollapsedContent">
+              <span class="navbar-toggler-icon"></span>
         </nav>
+        </div>
     <div class="container pt-3">
         {% block content %}
         {% endblock %}
 
-        <img src="banner" class="img-fluid">
+        <img class="img-fluid" src="banner">
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
