@@ -15,10 +15,8 @@ def authenticateUser(request):
     if user is not None:
         login(request, user)
 
-    redirect("/")
     return redirect("/")   
 
 def logoutUser(request):
     logout(request)
-    redirect("/")
     return redirect("/")
