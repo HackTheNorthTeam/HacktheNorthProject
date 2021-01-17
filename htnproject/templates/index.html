@@ -1,19 +1,33 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTNProject</title>
-</head>
-<body>
-    <label>Enter A Room!</label>
-    <input id="session-name" type="text" />
-    <input id="session-submit" type="button" value="Enter" />
-    <div id="local"></div>
-    <div id="remote"></div>
-    <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
-    <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
-    <script src="{% static 'js/index.js' %}"></script>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex h-100 justify-content-center align-items-center" style="max-width: 400px;">
+    <div class="col-md-8">
+        <h1 class="card-title" style="font-family: 'IBM Plex Sans'; font-weight: bold;">Hey! 👋</h1>
+            <div class="mb-3">
+                <label for="first-name" class="form-label" style="font-family: 'IBM Plex Mono';">First Name</label>
+                <input type="text" class="form-control" id="first-name" aria-describedby="first-name">
+                <div id="first-name" class="form-text">We'll never share your name with anyone else!</div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="school-pin" class="form-label" style="font-family: 'IBM Plex Mono';">School Pin</label>
+                        <input type="password" class="form-control" id="school-pin"> 
+                    </div>
+                    <div class="col-6">
+                        <label for="course-code" class="form-label" style="font-family: 'IBM Plex Mono';">Course Code</label>
+                        <input type="text" class="form-control" id="course-code"> 
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Submit</button>
+    </div>
+</div>
+<style>
+    body, html {
+        height: 100%;
+        background-color: #ECF8F8;
+    }
+</style>
+{% endblock %}

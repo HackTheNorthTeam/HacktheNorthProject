@@ -20,16 +20,6 @@ class VideoConsumer(AsyncJsonWebsocketConsumer):
                 "data": content['data'],
             })
 
-
-    async def send_offer(self, event):
-        await self.send_json(event["data"])
-
-    async def send_answer(self, event):
-        await self.send_json(event["data"])
-
-    async def send_ice_candidate(self, event):
-        await self.send_json(event["data"])
-
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
             self.room_group_name,

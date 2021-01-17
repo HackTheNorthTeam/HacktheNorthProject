@@ -34,4 +34,4 @@ connection.onstream = event => {
     }
 };
 
-document.querySelector('#session-submit').onclick = () => connection.openOrJoin(document.querySelector('#room-name').textContent);
+document.querySelector('#session-submit').onclick = () => connection.openOrJoin(document.querySelector('#session-name').textContent);
