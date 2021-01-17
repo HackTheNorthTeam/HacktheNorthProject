@@ -24,5 +24,8 @@ urlpatterns = [
     path('logout', views.logoutUser, name='logout'),
     path('findtutor', views.findTutor, name='findtutor'),
     path('queue', views.queue, name='queue'),
-    path('room/<str:room_name>', views.room, name='room')
+    path('room/<str:room_name>', views.room, name='room'),
+    path('authenticate', views.authenticate, name='authenticate'),
+    path('bye', views.bye, name='bye'),
+    path('session', views.session, name='session')
 ]

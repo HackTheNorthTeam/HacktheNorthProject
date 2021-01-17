@@ -52,3 +52,12 @@ def queue(request):
         get_redis_connection("default").rpush(request.user.course.code + "teacher", request.user.id)
         print(get_redis_connection("default").lrange(request.user.course.code + "teacher", 0, -1))
         return render(request, "queue.html")
+
+def authenticate(request):
+    return render(request, 'authenticate.html')
+
+def bye(request):
+    return render(request, 'bye.html')
+
+def session(request):
+    return render(request, 'session.html')
