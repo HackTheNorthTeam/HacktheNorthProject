@@ -2,20 +2,23 @@
 {% load static %}
 
 {% block content %}
+<style>p.bigchatbox{border-style: solid; border-width: thick; border-radius: 9px; height: 720px; width: 500px; background-color:white;}</style>
+<style>p.video {border-style: solid; border-width: thick; border-radius: 9px; height: 720px; width: 1280px;}</style>
+<style>p.chatbox {border-style: solid; border-width: thick; border-radius: 9px; height: 50px; width: 500px; position:fixed; left: 1284px; top: 798px}</style>
 <ul class="nav">
     <li class="nav-item">
-        <h1 style="font-family: 'IBM Plex Sans'; font-weight: bold;">✨ session-{{ token|safe }}</h1>
+        <h1 style="font-family: 'IBM Plex Sans'; font-weight: bold; position: relative; left: 150px;"><br>✨ session-{{ token|safe }}</h1>
     </li>
 </ul>
-<div class="container">
+<br>
     <div class="row">
-        <div class="col-md-8" id="remote"></div>
-        <div class="col-md-4">
-            <div class="demo-content">CHAT WOULD GO HERE!</div>
-            <div id="local"></div>
+        <div class="col-md-5 offset-md-1" id="remote">
+
         </div>
-    </div>>
-</div>
+        <div class="col-md-4 offset-md-2">
+            <p class="bigchatbox">CHAT WOULD GO HERE!</div>
+        </div>
+    <p class="chatbox">Type Text Here...</p>
 <style>
     body, html {
         height: 100%;

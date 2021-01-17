@@ -19,6 +19,21 @@ connection.session = {
     video: true
 };
 
+connection.mediaConstraints = {
+    audio: true,
+    video: {
+        mandatory: {
+            minWidth: 360,
+            maxWidth: 720,
+            minHeight: 360,
+            maxHeight: 720,
+            minAspectRatio: 1.66
+        },
+    }
+}
+
+connection.maxParticipantsAllowed = 2;
+
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
