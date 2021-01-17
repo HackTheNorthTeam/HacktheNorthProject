@@ -1,37 +1,50 @@
-var local = document.getElementById('local');
-var remote = document.getElementById('remote');
-var connection = new RTCMultiConnection();
-connection.socketUrl = connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+var session = Math.random().toString(36).slice(2);
+document.querySelector('#session-submit').onclick = () => {
+    let first_name = document.querySelector('#first-name');
+    let course = document.querySelector('#course-code');
+    let pin = document.querySelector('#school-pin');
 
-connection.iceServers = [];
-connection.iceServers.push({
-    urls: 'stun:stun.l.google.com:19302'
-});
-connection.iceServers.push({
-    urls: 'turn:numb.viagenie.ca:3478',
-    credential: 'HTNProject',
-    username: 'HTNProject@mailpoof.com'   
-});
-
-connection.session = {
-    audio: true,
-    video: true
+    var submission = {
+        "first_name": first_name.value,
+        "course": course.value,
+        "pin": pin.value
+    }
+    // Perform validation later.
+    socket.send(JSON.stringify({
+        "type": "add_student_to_queue",
+        "data": submission
+    }));
+    localStorage.setItem('submission', submission);
 };
 
-connection.sdpConstraints.mandatory = {
-    OfferToReceiveAudio: true,
-    OfferToReceiveVideo: true
+var socket = new WebSocket(
+    (location.protocol == "https:" ? "wss" : "ws") + "://" +
+    location.host +
+    "/ws/video/" +
+    session +
+    "/"
+);
+
+socket.onopen = event => {
+    console.log('We are connected!');
 };
 
-connection.onstream = event => {
-    switch (event.type) {
-        case 'local':
-            local.appendChild(event.mediaElement);
+socket.onmessage = function (event) {
+    let data = JSON.parse(event['data']);
+    switch (data['status']) {
+        case 'success':
+            setTimeout(() => location.replace("http://" + location.host + '/session/' + session), 500); // assume that connection is secure because webrtc won't work without it.
             break;
-        case 'remote':
-            remote.appendChild(event.mediaElement);
+        case 'failure':
+            // Create Toast Or Alert
             break;
     }
-};
+}
 
-document.querySelector('#session-submit').onclick = () => connection.openOrJoin(document.querySelector('#session-name').textContent);
+socket.onclose = event => {
+    socket.send(JSON.stringify({
+        "type": "remove_student_from_queue",
+        "data": JSON.parse(localStorage.getItem('submission'))
+    }));
+    console.log('We are now closing the connection!');
+};

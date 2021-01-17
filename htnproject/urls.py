@@ -22,5 +22,5 @@ urlpatterns = [
     path('', index, name='index'),
     path('authenticate', authenticate, name='authenticate'),
     path('bye', bye, name='bye'),
-    path('session', session, name='session')
+    path('session/<str:token>/', session, name='session')
 ]

@@ -9,5 +9,5 @@ def authenticate(request):
 def bye(request):
     return render(request, 'bye.html')
 
-def session(request):
-    return render(request, 'session.html')
+def session(request, token):
+    return render(request, 'session.html', { "token": token })

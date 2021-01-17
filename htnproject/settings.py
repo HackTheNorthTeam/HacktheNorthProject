@@ -125,8 +125,22 @@ STATIC_URL = '/static/'
 # Channels
 ASGI_APPLICATION = 'htnproject.asgi.application'
 
+# TODO: Change this to redis backend.
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Auth User Model
+AUTH_USER_MODEL = 'htnproject.User'

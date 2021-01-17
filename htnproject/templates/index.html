@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container d-flex h-100 justify-content-center align-items-center" style="max-width: 400px;">
@@ -21,7 +22,29 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Submit</button>
+            <button id="session-submit" type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Submit</button>
+            <div id="invalid-pin" class="toast" style="position: absolute; top: 0; right: 0;">
+                <div class="toast-header">
+                    <strong class="mr-auto">CourseAid</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    The school pin provided is invalid.
+                </div>
+            </div>
+            <div id="invalid-code" class="toast" style="position: absolute; top: 0; right: 0;">
+                <div class="toast-header">
+                    <strong class="mr-auto">CourseAid</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    The course code provided is invalid.
+                </div>
+            </div>
     </div>
 </div>
 <style>
@@ -30,4 +53,5 @@
         background-color: #ECF8F8;
     }
 </style>
+<script src="{% static 'js/index.js' %}"></script>
 {% endblock %}
