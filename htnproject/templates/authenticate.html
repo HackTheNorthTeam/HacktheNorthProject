@@ -4,15 +4,18 @@
 <div class="container d-flex h-100 justify-content-center align-items-center" style="max-width: 450px;">
     <div class="col-md-8">
         <h1 class="card-title" style="font-family: 'IBM Plex Sans'; font-weight: bold;">Lets Teach! 🧑‍🏫</h1>
+            <form action="authenticate" method="POST">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="username" class="form-label" style="font-family: 'IBM Plex Mono';">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="username" />
+                <input type="text" class="form-control"  name="username" aria-describedby="username" />
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label" style="font-family: 'IBM Plex Mono';">Password</label>
-                <input type="password" class="form-control" id="password" />
+                <input type="password" class="form-control" name="password" />
             </div>
             <button type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Submit</button>
+            </form>
     </div>
 </div>
 <style>

@@ -4,7 +4,11 @@
 {% block content %}
 <div class="container d-flex h-100 justify-content-center align-items-center" style="max-width: 400px;">
     <div class="col-md-8">
-        <h1 class="card-title" style="font-family: 'IBM Plex Sans'; font-weight: bold;">Hey! 👋</h1>
+        <h1 style="font-family: 'IBM Plex Sans'; font-weight: bold;">Hey! 👋</h1>
+        {% if request.user.is_authenticated and is_in_queue == False %}
+        <form action="sign-out" method="get"><button id="logout" type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Logout</button></form>
+        <form action="queue" method="post">{% csrf_token %}<button id="join-queue" type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Join Queue</button></form>
+        {% elif is_in_queue == False %}
             <div class="mb-3">
                 <label for="first-name" class="form-label" style="font-family: 'IBM Plex Mono';">First Name</label>
                 <input type="text" class="form-control" id="first-name" aria-describedby="first-name">
@@ -45,6 +49,7 @@
                     The course code provided is invalid.
                 </div>
             </div>
+            {% endif %}
     </div>
 </div>
 <style>
