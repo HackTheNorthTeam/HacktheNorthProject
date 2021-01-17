@@ -55,7 +55,6 @@ class VideoConsumer(AsyncJsonWebsocketConsumer):
                 "status": "success",
                 "message": "You are now in queue!"
             })
-            print(redis.lindex("ENG4U-student", 0))
         # Add the user to the redis cache with the appropriate key.
     
     async def remove_student_from_queue(self, content):

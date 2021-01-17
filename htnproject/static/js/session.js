@@ -19,17 +19,21 @@ connection.session = {
     video: true
 };
 
+connection.maxParticipantsAllowed = 2;
+
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
 };
 
 connection.onstream = event => {
+    event.mediaElement.controls = false;
     switch (event.type) {
         case 'local':
             local.appendChild(event.mediaElement);
             break;
         case 'remote':
+            document.querySelector('#instructor-message').innerHTML = "";
             remote.appendChild(event.mediaElement);
             break;
     }
@@ -41,9 +45,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
 document.querySelector('#end-call').onclick = () => {
     // Perform validation later.
-    socket.send(JSON.stringify({
-        "type": "remove_student_from_queue",
-        "data": localStorage.getItem('submission')
-    }));
-    setTimeout(() => location.replace('http://' + location.host + '/bye/'));
+    // socket.send(JSON.stringify({
+    //     "type": "remove_student_from_queue",
+    //     "data": localStorage.getItem('submission')
+    // }));
+    setTimeout(() => location.replace('http://' + location.host + '/'), 500);
+};
+
+document.querySelector('#mute-microphone').onclick = () => {
+    if (document.querySelector('#mute-microphone').textContent == 'Mute Microphone') {
+        connection.attachStreams[0].mute('audio');
+        document.querySelector('#mute-microphone').textContent = 'Unmute Microphone';
+    } else {
+        connection.attachStreams[0].unmute('audio');
+        document.querySelector('#mute-microphone').textContent = 'Mute Microphone';
+    }
 };

@@ -2,19 +2,30 @@
 {% load static %}
 
 {% block content %}
-<ul class="nav">
-    <li class="nav-item">
-        <h1 style="font-family: 'IBM Plex Sans'; font-weight: bold;">✨ session-{{ token|safe }}</h1>
-    </li>
-</ul>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8" id="remote"></div>
-        <div class="col-md-4">
-            <div class="demo-content">CHAT WOULD GO HERE!</div>
-            <div id="local"></div>
+<div class="pt-3 ps-3 pe-3 pb-1">
+    <ul class="nav">
+        <li class="nav-item inline-block">
+            <h2 style="font-family: 'IBM Plex Sans'; font-weight: bold; position: relative;">✨ session-{{ token|safe }}</h2>
+            <div id="instructor-message">
+                <div class="spinner-border" style="width: 1rem; height: 1rem;" role="status"></div>
+                <strong>Waiting For An Instructor....</strong>
+            </div>
+        </li>
+        <li class="nav-item">
+            <button id="mute-microphone" type="submit" class="btn btn-link" style="font-family: 'IBM Plex Mono';">Mute Microphone</button>
+        </li>
+        <li class="nav-item">
+            <button id="end-call" type="submit" class="btn btn-link" style="font-family: 'IBM Plex Mono';">End Call</button>
+        </li>
+
+    </ul>
+    <div class="container d-flex h-100 justify-content-center align-items-center">
+        <div class="row col-6" id="remote" style="object-fit:cover; width:640px; height:640px">
         </div>
-    </div>>
+        <div class="row col-6" id="local" style="object-fit:cover; width:640px; height:640px"></div>
+    </div>
+    <div class="container d-flex h-100 justify-content-center align-items-center">
+    </div>
 </div>
 <style>
     body, html {

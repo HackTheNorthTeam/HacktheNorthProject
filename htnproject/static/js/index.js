@@ -29,11 +29,11 @@ socket.onopen = event => {
     console.log('We are connected!');
 };
 
-socket.onmessage = function (event) {
+socket.onmessage = event => {
     let data = JSON.parse(event['data']);
     switch (data['status']) {
         case 'success':
-            setTimeout(() => location.replace("http://" + location.host + '/session/' + session), 500); // assume that connection is secure because webrtc won't work without it.
+            setTimeout(() => location.replace('/session/' + session), 500); // assume that connection is secure because webrtc won't work without it.
             break;
         case 'failure':
             // Create Toast Or Alert
