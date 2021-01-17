@@ -6,8 +6,9 @@
     <div class="col-md-8">
         <h1 class="card-title" style="font-family: 'IBM Plex Sans'; font-weight: bold;">Hey! 👋</h1>
         {% if request.user.is_authenticated %}
-            <form action="sign-out" method="get"><button id="logout" type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">sign-out</button></form>
             <form action="queue" method="post">{% csrf_token %}<button id="join-queue" type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">Join Queue</button></form>
+            <br>
+            <form action="sign-out" method="get"><button id="logout" type="submit" class="btn btn-primary" style="font-family: 'IBM Plex Mono';">sign-out</button></form>
         {% else %}
             <div class="mb-3">
                 <label for="first-name" class="form-label" style="font-family: 'IBM Plex Mono';">First Name</label>

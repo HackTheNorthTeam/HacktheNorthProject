@@ -19,19 +19,6 @@ connection.session = {
     video: true
 };
 
-connection.mediaConstraints = {
-    audio: true,
-    video: {
-        mandatory: {
-            minWidth: 360,
-            maxWidth: 720,
-            minHeight: 360,
-            maxHeight: 720,
-            minAspectRatio: 1.66
-        },
-    }
-}
-
 connection.maxParticipantsAllowed = 2;
 
 connection.sdpConstraints.mandatory = {
@@ -40,11 +27,13 @@ connection.sdpConstraints.mandatory = {
 };
 
 connection.onstream = event => {
+    event.mediaElement.controls = false;
     switch (event.type) {
         case 'local':
             local.appendChild(event.mediaElement);
             break;
         case 'remote':
+            document.querySelector('#instructor-message').innerHTML = "";
             remote.appendChild(event.mediaElement);
             break;
     }
@@ -56,9 +45,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
 document.querySelector('#end-call').onclick = () => {
     // Perform validation later.
-    socket.send(JSON.stringify({
-        "type": "remove_student_from_queue",
-        "data": localStorage.getItem('submission')
-    }));
-    setTimeout(() => location.replace('http://' + location.host + '/bye/'));
+    // socket.send(JSON.stringify({
+    //     "type": "remove_student_from_queue",
+    //     "data": localStorage.getItem('submission')
+    // }));
+    setTimeout(() => location.replace('http://' + location.host + '/'), 500);
+};
+
+document.querySelector('#mute-microphone').onclick = () => {
+    if (document.querySelector('#mute-microphone').textContent == 'Mute Microphone') {
+        connection.attachStreams[0].mute('audio');
+        document.querySelector('#mute-microphone').textContent = 'Unmute Microphone';
+    } else {
+        connection.attachStreams[0].unmute('audio');
+        document.querySelector('#mute-microphone').textContent = 'Mute Microphone';
+    }
 };
