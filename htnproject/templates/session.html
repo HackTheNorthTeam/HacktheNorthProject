@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<ul class="nav">
+    <li class="nav-item">
+        <h1 style="font-family: 'IBM Plex Sans'; font-weight: bold;">✨ session-{{ token|safe }}</h1>
+    </li>
+</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" id="remote"></div>
+        <div class="col-md-4">
+            <div class="demo-content">CHAT WOULD GO HERE!</div>
+            <div id="local"></div>
+        </div>
+    </div>>
+</div>
+<style>
+    body, html {
+        height: 100%;
+        background-color: #ECF8F8;
+    }
+</style>
+<script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+<script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+<script src="{% static 'js/session.js' %}"></script>
+{% endblock %}
