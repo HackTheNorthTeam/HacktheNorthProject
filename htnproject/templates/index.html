@@ -11,7 +11,7 @@
     <form action="findtutor" method="POST">
         {% csrf_token %}
     <div class="input-group text-center">
-        <textarea class="form-control"  placeholder="Enter your question"></textarea>
+        <textarea class="form-control"  name="name" placeholder="Enter your name"></textarea>
     </div>
     <div class="input-group text-center">
         <input class="input-group-text text-center" name="course" style="width: 100%; font-size: 18pt" placeholder="Ontario Course Code">

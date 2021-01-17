@@ -1,23 +1,28 @@
 class queue:
-    identifier = None
-    teachers = None
-    students = None
 
-    line = None
+    def __init__(self, teachers = [], students = []):
+        self.teachers = teachers
+        self.students = students
+        self.line = {}
 
-    def __init__(this, identifier, teachers, students):
-        this.identifier = identifier
-        this.teachers = teachers
-        this.students = students
+    def showPairs(self):
+        print(self.line)
 
-    line = {}
+    def getStudentLength(self):
+        return len(self.students)
 
-    def pairTeachersStudents(this):
-        for n in range(len(this.teachers)):
-            this.line[this.teachers[n]] = this.students[n]
+    def addtoStudentQueue(self, student):
+        self.students.append(student)
 
-        for n in range(len(this.teachers)):
-            this.students.remove(this.students[0])
+    def addtoTeacherQueue(self, teacher):
+        self.teachers.append(teacher)
+    
+    def pairTeachersStudents(self):
+        for n in range(len(self.teachers)):
+            self.line[self.teachers[n]] = self.students[n]
+        for n in range(len(self.teachers)):
+            self.students.remove(self.students[0])
 
-    def removePair(this, index):
-        this.line[index] = this.students[0]
+    def setPair(self, index):
+        self.line[index] = self.students[0]
+        self.students.remove(self.students[0])
